@@ -77,7 +77,7 @@ def send_me_to_page(code):
 
 @app.route('/about')
 def about_page():
-	return '* 只需将要缩短的链接粘贴在第一个输入框, 随后回车即可(第二个输入框似乎是没用的...);<br>* 回车后会得到一组json数据, 若要直接使用短链只需复制short_url的值.'
+	return '* 只需将要缩短的链接粘贴在第一个输入框, 随后回车即可(第二个输入框似乎是没用的...);<br>* 回车后会得到一组json数据, 若要直接使用短链只需复制short_url的值. 假设此链接曾经被缩短过, used会显示为true, 可以再次缩短此短链以使用链接预览功能;<br>经测试, 链接预览功能在钉钉上可用, Telegram上似乎不行.'
 
 @app.route('/%s'%backup_pwd)
 def backup():
