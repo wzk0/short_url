@@ -54,22 +54,30 @@ def index_page():
 		if url.startswith('https://') or url.startswith('http://'):
 			if if_in_data(url):
 				code=get_code_from_data(url)[0]
-				word='此链接曾被缩短过, 因此在拥有链接预览功能的软件中, 此短链将显示预览文字: %s. 可以对此短链进行二次缩短以自定义预览文字.'%get_code_from_data(url)[1]
+				used=True
 			else:
 				code=get_new_code()
 				add_data(code,url,preview_word)
-				word='此链接未被缩短过, 因此在拥有链接预览功能的软件中, 此短链将显示预览文字: %s'%preview_word
-			return '短链: %s%s '%(host,code)+word
+				used=False
+			return json.dumps({'code':200,'used':used,'short_code':code,'short_url':host+code,'goal_url':url},ensure_ascii=False)
 		else:
 			return '请输入格式正确的链接!'
 	return render_template('index.html')
 
 @app.route('/<string:code>')
 def send_me_to_page(code):
-	try:
-		return "<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='description' content='%s'><meta http-equiv='refresh' content='0;url=%s'></head></html>"%(get_url_from_code(code))
-	except:
-		return '错误!'
+	if code=='about':
+		pass
+	else:
+		try:
+			description,url=get_url_from_code(code)
+			return "<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='description' content='%s'><title>%s</title></head><body><article>%s</article><meta http-equiv='refresh' content='0;url=%s'><</body></html>"%(description,description,description,url)
+		except:
+			return '错误!'
+
+@app.route('/about')
+def about_page():
+	return '* 只需将要缩短的链接粘贴在第一个输入框, 随后回车即可(第二个输入框似乎是没用的...);<br>* 回车后会得到一组json数据, 若要直接使用短链只需复制short_url的值.'
 
 @app.route('/%s'%backup_pwd)
 def backup():
