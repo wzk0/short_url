@@ -71,7 +71,7 @@ def send_me_to_page(code):
 	else:
 		try:
 			description,url=get_url_from_code(code)
-			return "<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='description' content='%s'><title>%s</title></head><body><article>%s</article><meta http-equiv='refresh' content='0;url=%s'><</body></html>"%(description,description,description,url)
+			return "<!DOCTYPE html><html><head><meta charset='utf-8'><meta name='description' content='%s'><title>%s</title></head><body><meta http-equiv='refresh' content='0;url=%s'></body></html>"%(description,description,url)
 		except:
 			return '错误!'
 
